@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
 import CountryList from "./country-list";
-import Country from "./country";
 
 function App() {
   return (

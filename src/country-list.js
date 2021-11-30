@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Country from "./country";
 
@@ -10,18 +10,38 @@ const CountryListStyled = styled.div`
   padding: 4em 2em;
 `;
 
-function countryList() {
+function CountryList() {
+  const [countryList, setCountryList] = useState([]);
+  useEffect(() => {
+    fetch("https://restcountries.com/v2/all")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setCountryList(data);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+  }, []);
   return (
     <CountryListStyled>
-      <Country
-        flag="https://upload.wikimedia.org/wikipedia/commons/f/f1/Peru_flag_with_coat_of_arms_300.PNG"
-        name="Peru"
-        population={111}
-        region="America"
-        capital="lima"
-      />
+      {countryList.map(
+        ({ name, capital, population, region, flag, numericCode }) => {
+          return (
+            <Country
+              flag={flag}
+              name={name}
+              key={numericCode}
+              population={population}
+              region={region}
+              capital={capital}
+            />
+          );
+        }
+      )}
     </CountryListStyled>
   );
 }
 
-export default countryList;
+export default CountryList;
