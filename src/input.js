@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const InputStyled = styled.label`
   display: inline-flex;
-  background: white;
+  background: var(--white);
   align-items: center;
   box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.05);
   padding: 0 2rem;
@@ -19,7 +19,9 @@ const InputStyled = styled.label`
     height: 48px;
     line-height: 48px;
     font-size: 0.7em;
+    background: var(--white);
     outline: 0;
+    color: var(--black);
     &::-webkit-input-placeholder {
       color: #c4c4c4;
     }
