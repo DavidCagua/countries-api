@@ -32,14 +32,14 @@ function CountryList() {
   });
 
   useEffect(() => {
-    fetch("https://restcountries.com/v2/all")
+    fetch("https://restcountries.com/v3.1/all")
       .then((response) => {
         return response.json();
       })
       .then((list) => {
         dispatch({
           type: "SET_COUNTRY_LIST",
-          payload: list,
+          payload: list.filter((item) => item.ccn3 !== undefined),
         });
       })
       .catch(() => {
@@ -52,12 +52,13 @@ function CountryList() {
       <ActionList />
       <CountryListStyled>
         {countryList.map(
-          ({ name, flag, population, capital, region, numericCode }) => {
+          ({ name, flags, population, capital, region, ccn3 }) => {
             return (
               <Country
-                flag={flag}
-                name={name}
-                key={numericCode}
+                flag={flags.png}
+                name={name.common}
+                key={name.common}
+                code={ccn3}
                 population={population}
                 region={region}
                 capital={capital}

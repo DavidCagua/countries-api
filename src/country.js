@@ -37,10 +37,10 @@ const CountryStyled = styled.div`
   }
 `;
 
-function Country({ flag, name, population, region, capital }) {
+function Country({ flag, name, population, region, capital, code }) {
   const navigate = useNavigate();
   function handleClick() {
-    navigate(`/country/${name}`);
+    navigate(`/country/${code}`);
   }
   return (
     <CountryStyled onClick={handleClick}>
