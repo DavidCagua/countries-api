@@ -4,31 +4,47 @@ export default function reducer(state, action) {
       return { ...state, countryList: action.payload };
     }
     case "SET_COUNTRY_BY_NAME": {
+      let countryFilteredByRegion = [];
       let list;
       if (state.filterByRegion !== "") {
-        list = state.coutryFilteredByRegion;
+        list = state.countryFilteredByRegion;
+        if (action.payload === "") {
+          list = state.countryList;
+          countryFilteredByRegion = list.filter(
+            (country) => country.region === state.filterByRegion
+          );
+          return {
+            ...state,
+            countryListByName: list,
+            countryFilteredByRegion,
+          };
+        }
       } else {
-        list = state.coutryList;
+        list = state.countryList;
       }
       const countryListByName = list.filter((country) =>
-        country.name.toLowerCase().includes(action.payload.toLowerCase())
+        country.name.common.toLowerCase().includes(action.payload.toLowerCase())
       );
       return { ...state, countryListByName };
     }
     case "FILTER_BY_REGION": {
       const { regionSelected } = action.payload;
-
-      if ("" === regionSelected) {
-        return { ...state, coutryFilteredByRegion: [], filterByRegion: "" };
+      let countryFilteredByRegion = [];
+      if (regionSelected === "") {
+        return { ...state, countryFilteredByRegion: [], filterByRegion: "" };
       }
-
-      const coutryFilteredByRegion = state.countryList.filter(
-        (country) => country.region === regionSelected
-      );
-
+      if (state.countryListByName) {
+        countryFilteredByRegion = state.countryListByName.filter(
+          (country) => country.region === regionSelected
+        );
+      } else {
+        countryFilteredByRegion = state.countryList.filter(
+          (country) => country.region === regionSelected
+        );
+      }
       return {
         ...state,
-        coutryFilteredByRegion,
+        countryFilteredByRegion,
         filterByRegion: regionSelected,
       };
     }

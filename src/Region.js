@@ -29,9 +29,7 @@ export const Region = () => {
    * @param {React.SyntheticEvent} selectEvent
    */
   const onRegionChange = (selectEvent) => {
-    console.log(selectEvent.target.value);
     const value = selectEvent.target.value;
-
     dispatch(filterByRegionAction(value));
   };
 
