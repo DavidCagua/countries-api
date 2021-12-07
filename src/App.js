@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import CountryList from "./country-list";
 import { Provider } from "react-redux";
@@ -20,10 +20,6 @@ const store = createStore(reducer, initialState);
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const mainClass = darkMode ? "is-dark-mode" : "is-light-mode";
-
-  useEffect(() => {
-    const mql = window.matchMedia("(prefers-color-scheme: dark)");
-  }, []);
   return (
     <main className={mainClass}>
       <Provider store={store}>
@@ -31,7 +27,7 @@ function App() {
           <Header darkMode={darkMode} setDarkmode={setDarkMode} />
           <Routes>
             <Route path="/country/:id" element={<CountryPage />} />
-            <Route path="/" element={<CountryList />}></Route>
+            <Route path="/countries-api" element={<CountryList />}></Route>
           </Routes>
         </Router>
       </Provider>

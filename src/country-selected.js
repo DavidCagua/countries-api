@@ -62,7 +62,7 @@ function CountrySelected({
 }) {
   return (
     <CountrySelectedStyled>
-      <img src={flags.png} />
+      <img src={flags.png} alt="" />
       <div>
         <h2>{name.common}</h2>
         <div className="grid">
