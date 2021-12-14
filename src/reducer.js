@@ -4,44 +4,45 @@ export default function reducer(state, action) {
       return { ...state, countryList: action.payload };
     }
     case "SET_COUNTRY_BY_NAME": {
-      let countryFilteredByRegion = [];
-      let list;
+      let list = [];
       if (state.filterByRegion !== "") {
-        list = state.countryFilteredByRegion;
-        if (action.payload === "") {
-          list = state.countryList;
-          countryFilteredByRegion = list.filter(
-            (country) => country.region === state.filterByRegion
-          );
-          return {
-            ...state,
-            countryListByName: list,
-            countryFilteredByRegion,
-          };
-        }
+        list = state.countryList.filter(
+          (country) => country.region === state.filterByRegion
+        );
       } else {
         list = state.countryList;
       }
       const countryListByName = list.filter((country) =>
         country.name.common.toLowerCase().includes(action.payload.toLowerCase())
       );
-      return { ...state, countryListByName };
+      state.flag = "byName";
+      return { ...state, countryListByName, filterByName: action.payload };
     }
     case "FILTER_BY_REGION": {
+      let list = [];
       const { regionSelected } = action.payload;
-      let countryFilteredByRegion = [];
+
       if (regionSelected === "") {
-        return { ...state, countryFilteredByRegion: [], filterByRegion: "" };
+        state.flag = "";
+        return {
+          ...state,
+          countryFilteredByRegion: [],
+          filterByRegion: "",
+        };
       }
-      if (state.countryListByName) {
-        countryFilteredByRegion = state.countryListByName.filter(
-          (country) => country.region === regionSelected
+      if (state.countryListByName.length > 0) {
+        list = state.countryList.filter((country) =>
+          country.name.common
+            .toLowerCase()
+            .includes(state.filterByName.toLowerCase())
         );
       } else {
-        countryFilteredByRegion = state.countryList.filter(
-          (country) => country.region === regionSelected
-        );
+        list = state.countryList;
       }
+      const countryFilteredByRegion = list.filter(
+        (country) => country.region === regionSelected
+      );
+      state.flag = "byRegion";
       return {
         ...state,
         countryFilteredByRegion,

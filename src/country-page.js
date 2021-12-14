@@ -41,7 +41,7 @@ function CountryPage() {
         }
       });
     return () => (mounted = false);
-  }, []);
+  }, [params.id]);
   function handleClick() {
     navigate(-1);
   }

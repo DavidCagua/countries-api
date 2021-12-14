@@ -22,11 +22,11 @@ function CountryList() {
   const countryListByName = useSelector((state) => state.countryListByName);
 
   const countryList = useSelector((state) => {
-    if (state.filterByRegion !== "" && countryListByName.length >= 0) {
-      return state.countryFilteredByRegion;
-    }
-    if (countryListByName.length > 0) {
+    if (state.flag === "byName") {
       return countryListByName;
+    }
+    if (state.flag === "byRegion") {
+      return state.countryFilteredByRegion;
     }
     return state.countryList;
   });
@@ -51,20 +51,24 @@ function CountryList() {
     <Wrapper>
       <ActionList />
       <CountryListStyled>
-        {countryList.map(
-          ({ name, flags, population, capital, region, ccn3 }) => {
-            return (
-              <Country
-                flag={flags.png}
-                name={name.common}
-                key={name.common}
-                code={ccn3}
-                population={population}
-                region={region}
-                capital={capital}
-              />
-            );
-          }
+        {countryList.length > 0 ? (
+          countryList.map(
+            ({ name, flags, population, capital, region, ccn3 }) => {
+              return (
+                <Country
+                  flag={flags.png}
+                  name={name.common}
+                  key={name.common}
+                  code={ccn3}
+                  population={population}
+                  region={region}
+                  capital={capital}
+                />
+              );
+            }
+          )
+        ) : (
+          <p>No result, try different.</p>
         )}
       </CountryListStyled>
     </Wrapper>

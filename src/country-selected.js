@@ -117,7 +117,11 @@ function CountrySelected({
         </p>
         {borders
           ? borders.map((item) => {
-              return <span className="border-item">{item}</span>;
+              return (
+                <span key={item} className="border-item">
+                  {item}
+                </span>
+              );
             })
           : "None"}
       </div>

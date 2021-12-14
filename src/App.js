@@ -13,6 +13,8 @@ const initialState = {
   countryListByName: [],
   coutryFilteredByRegion: [],
   filterByRegion: "",
+  filterByName: "",
+  flag: "",
 };
 
 const store = createStore(reducer, initialState);
@@ -27,7 +29,7 @@ function App() {
           <Header darkMode={darkMode} setDarkmode={setDarkMode} />
           <Routes>
             <Route path="/country/:id" element={<CountryPage />} />
-            <Route path="/countries-api" element={<CountryList />}></Route>
+            <Route path="/" element={<CountryList />}></Route>
           </Routes>
         </Router>
       </Provider>
